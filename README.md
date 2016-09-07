@@ -1,21 +1,11 @@
-# A (very) simple starting point to use ES6 & beyond features in the browser today with Webpack and Babel.
+# Pomodoro Timer
 
-Out of the box includes features up to stage 0, tweak to your needs.
+## Menu Screen
+- A setup screen has a slider for break length, from 1 to 30 minutes, and a slider for Session Length, from 5 minutes to 120. One button below says "Start session".
 
-Also supports SASS, just create your `*.scss` file in `/app` and require it, or simply change the sample file provided.
-
-## Usage
-
-If you don't have webpack installed globally do so by running `npm install webpack -g`. Then run `npm install` to install dependencies.
-
-- `npm start` will start the live-reload dev server.
-- `npm run build` will build the site for development use. By default site are output in the `dist/` folder
-- `npm run production` will output a minified build for production use.
-- `npm run clean` will remove the `/dist` folder.
-
-## Github Pages
-
-After you've built site site, you can publish it to Github Pages by using a `git subtree push`.  
-Make sure you've committed `dist/` and run `git subtree push --prefix dist origin gh-pages`.  
-If you don't want to use Github Pages add `dist/` to `.gitignore`.
+## Timer Screen
+- the whole window should change color proportional to the time elapsed. If wider than high, go from left to right, else go from bottom to top.
+- Just one big timer in middle of screen with flexbox: "5 Minutes 37 Seconds". On small width should collapse to two rows.
+- breaktime starts automatically after time is up, and is visually distinguished by a different background color, and a row above the timer saying 'Break Time'. Two buttons below say 'Start the next Session' and 'Back to Menu'.
+- After breaktime is up, it says "Break is up", color changes to red, a timer with a '-' in front starts counting up to 10 min. If still no user input return to the Menu Screen.
 
