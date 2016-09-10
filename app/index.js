@@ -36,12 +36,25 @@ function startTimer(duration, target) {
 
 }
 
-function timerCallback() {
-  let minutes = document.querySelector('#sessionMinutes');
-  let seconds = document.querySelector('#sessionSeconds');
-  let duration = parseInt(minutes.value * 60) + parseInt(seconds.value);
+function getDuration(minutes, seconds) {
+  if (minutes.value && seconds.value) {
+    return parseInt(minutes.value) * 60 + parseInt(seconds.value);
+  } else if (minutes.value) {
+    return parseInt(minutes.value) * 60;
+  } else if (seconds.value) {
+    return parseInt(seconds.value);
+  } else {
+    return '';
+  }
+}
 
-  startTimer(duration, timer);
+function timerCallback() {
+  const sessionMinutes = document.querySelector('#sessionMinutes');
+  const sessionSeconds = document.querySelector('#sessionSeconds');
+
+  const duration = getDuration(sessionMinutes, sessionSeconds);
+
+  duration ? startTimer(duration, timer) : console.log('no value given');
 }
 
 startButton.addEventListener('click', timerCallback, false)
