@@ -37,7 +37,11 @@ function startTimer(duration, target) {
 }
 
 function timerCallback() {
-  startTimer(2, timer);
+  let minutes = document.querySelector('#sessionMinutes');
+  let seconds = document.querySelector('#sessionSeconds');
+  let duration = parseInt(minutes.value * 60) + parseInt(seconds.value);
+
+  startTimer(duration, timer);
 }
 
 startButton.addEventListener('click', timerCallback, false)

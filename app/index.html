@@ -5,7 +5,24 @@
   <title>Pomodoro Timer</title>
 </head>
 <body>
-  <button type="button" id="start">Start</button>
+  <form class="pure-form pure-form-aligned">
+    <fieldset>
+    <div class="pure-control-group">
+      <label for="sessionMinutes">Session Time</label>
+      <input type="text" placeholder="Minutes" id="sessionMinutes">
+      <input type="text" placeholder="Seconds" id="sessionSeconds">
+    </div>
+
+    <div class="pure-control-group">
+      <label for="breakMinutes">Break Time</label>
+      <input type="text" placeholder="Minutes" id="breakMinutes">
+      <input type="text" placeholder="Seconds" id="breakSeconds">
+    </div>
+
+    <button type="button" class="pure-button pure-button-primary" id="start">Start</button>
+
+    </fieldset>
+  </form>
   <p id="timer"></p>
 </body>
 </html>
