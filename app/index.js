@@ -47,17 +47,16 @@ function getDuration(minutes, seconds) {
 }
 
 function startTimer(duration, target) {
-  timeInterval = setInterval(function () {
-    updateTimer(duration--, target);
-  }, 1000);
-
+  if (duration) {
+    timeInterval = setInterval(function () {
+      updateTimer(duration--, target);
+    }, 1000);
+  } else {
+    console.debug('no value give');
+  }
 }
 
-function timerCallback() {
-  const duration = getDuration(sessionMinutes, sessionSeconds);
-  duration ? startTimer(duration, timer) : console.log('no value given');
-}
-
-startButton.addEventListener('click', timerCallback, false)
-//startButton.addEventListener('click', () => startTimer(duration, target), false);
+startButton.addEventListener('click',
+  () => startTimer(getDuration(sessionMinutes, sessionSeconds), timer),
+  false);
 
