@@ -1,11 +1,34 @@
-'use strict';
 import './style.scss';
 
-// randomly using ES7 object rest spread because it currently raises
-// an error in all browsers, but can be transpiled by Babel
-const { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
-const n = { x, y, ...z };
-if (Object.keys(n).map((key) => n[key]).reduce((p,v) => p + v) === 10) {
-  document.querySelector('#app').insertAdjacentHTML('afterbegin', '<h1>works.</h1>');
+const timer = document.querySelector('#timer');
+const startButton = document.querySelector('#start');
+
+function renderString(string, target) {
+  target.textContent = string;
 }
+
+function makeTimeString (time) {
+  let minutes = parseInt(time / 60, 10);
+  let seconds = parseInt(time % 60, 10);
+  return minutes + " Minutes " + seconds + " Seconds";
+}
+
+function startTimer(duration, target) {
+  var time = duration;
+
+  setInterval(function () {
+    var timeString = makeTimeString(time);
+    renderString(timeString, target);
+
+    if (--time < 0) {
+      time = duration;
+    }
+  }, 1000);
+}
+
+function timerCallback() {
+  startTimer(5, timer);
+}
+
+startButton.addEventListener('click', timerCallback, false)
 
