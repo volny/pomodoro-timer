@@ -3,6 +3,11 @@ import './style.scss';
 const timer = document.querySelector('#timer');
 const startButton = document.querySelector('#start');
 
+const sessionMinutes = document.querySelector('#sessionMinutes');
+const sessionSeconds = document.querySelector('#sessionSeconds');
+const breakMinutes = document.querySelector('#breakMinutes');
+const breakSeconds = document.querySelector('#breakSeconds');
+
 let timeInterval;
 
 function renderString(string, target) {
@@ -29,13 +34,6 @@ function updateTimer(duration, target) {
   }
 }
 
-function startTimer(duration, target) {
-  timeInterval = setInterval(function () {
-    updateTimer(duration--, target);
-  }, 1000);
-
-}
-
 function getDuration(minutes, seconds) {
   if (minutes.value && seconds.value) {
     return parseInt(minutes.value) * 60 + parseInt(seconds.value);
@@ -48,14 +46,18 @@ function getDuration(minutes, seconds) {
   }
 }
 
+function startTimer(duration, target) {
+  timeInterval = setInterval(function () {
+    updateTimer(duration--, target);
+  }, 1000);
+
+}
+
 function timerCallback() {
-  const sessionMinutes = document.querySelector('#sessionMinutes');
-  const sessionSeconds = document.querySelector('#sessionSeconds');
-
   const duration = getDuration(sessionMinutes, sessionSeconds);
-
   duration ? startTimer(duration, timer) : console.log('no value given');
 }
 
 startButton.addEventListener('click', timerCallback, false)
+//startButton.addEventListener('click', () => startTimer(duration, target), false);
 
