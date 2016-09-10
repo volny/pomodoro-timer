@@ -4,10 +4,8 @@ import $ from 'jquery';
 let timeInterval;
 let mode = 'session';
 
-
 function renderTime(string) {
-  const timer = document.querySelector('#timer');
-  timer.textContent = string;
+  $('#timer').text(string);
 }
 
 function toggleMode(mode) {
@@ -20,51 +18,55 @@ function makeTimeString (time) {
   return minutes + " Minutes " + seconds + " Seconds";
 }
 
-function startNextSession() {
+function stopSession() {
   clearInterval(timeInterval);
+}
+
+function startNextSession() {
+  stopSession();
   mode = toggleMode(mode);
   startTimer(getDuration(mode));
 }
 
 function updateTimer(duration) {
-  var timeString = makeTimeString(duration);
-  renderTime(timeString);
+  renderTime(makeTimeString(duration));
 
   if (duration === 0) {
     startNextSession();
   }
 }
 
+// TODO error when converting to jQuery selectors?
 function getValues(mode) {
   if (mode === 'session') {
     return [document.querySelector('#sessionMinutes'), document.querySelector('#sessionSeconds')]
+    //return [$('#sessionMinutes'), $('#sessionSeconds')];
   } else if (mode === 'break') {
     return [document.querySelector('#breakMinutes'), document.querySelector('#breakSeconds')]
+    //return [$('#breakMinutes'), $('#breakSeconds')];
   }
 }
 
 function getDuration(mode) {
   const minutes = getValues(mode)[0];
   const seconds = getValues(mode)[1];
-
-  if (minutes.value && seconds.value) {
-    return parseInt(minutes.value) * 60 + parseInt(seconds.value);
-  } else if (minutes.value) {
-    return parseInt(minutes.value) * 60;
-  } else if (seconds.value) {
-    return parseInt(seconds.value);
-  } else {
-    return '';
+  let duration = 0;
+  if (minutes.value) {
+    duration += parseInt(minutes.value) *60;
   }
+  if (seconds.value) {
+    duration += parseInt(seconds.value);
+  }
+  return duration;
 }
 
 function renderForMode(mode) {
-  const session = document.querySelector('#session')
+  const session = $('#session');
   if (mode === 'break') {
-    session.textContent = 'Break Time :)';
+    session.text('Break Time :)');
     $('.break-button').show();
   } else {
-    session.textContent = '';
+    session.text('');
     $('.break-button').hide();
   }
 }
@@ -81,14 +83,12 @@ function startTimer(duration) {
       updateTimer(duration--);
     }, 1000);
   } else {
-    console.debug('no value give');
+    console.debug('no value given');
   }
 }
 
-document.querySelector('#restart').addEventListener('click', startNextSession, false);
+$('#restart').click(startNextSession);
+$('#reset').click(stopSession);
 
-document.querySelector('#start').addEventListener('click',
-  //() => startTimer(getDuration(sessionMinutes, sessionSeconds)),
-  () => startTimer(getDuration('session')),
-  false);
+$('#start').click(() => startTimer(getDuration('session')));
 
