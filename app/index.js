@@ -1,17 +1,27 @@
 import './style.scss';
 
-const timer = document.querySelector('#timer');
 const startButton = document.querySelector('#start');
-
 const sessionMinutes = document.querySelector('#sessionMinutes');
 const sessionSeconds = document.querySelector('#sessionSeconds');
 const breakMinutes = document.querySelector('#breakMinutes');
 const breakSeconds = document.querySelector('#breakSeconds');
 
 let timeInterval;
+let mode = 'session';
 
-function renderString(string, target) {
-  target.textContent = string;
+
+function renderTime(string) {
+  const timer = document.querySelector('#timer');
+  timer.textContent = string;
+}
+
+function renderMode(string) {
+  const session = document.querySelector('#session');
+  session.textContent = string;
+}
+
+function toggleMode(mode) {
+  return mode === 'session' ? 'break' : 'session';
 }
 
 function makeTimeString (time) {
@@ -20,17 +30,24 @@ function makeTimeString (time) {
   return minutes + " Minutes " + seconds + " Seconds";
 }
 
-function timerHasEnded() {
-  clearInterval(timeInterval);
-  renderString('Finished', timer)
-}
-
-function updateTimer(duration, target) {
+function updateTimer(duration) {
   var timeString = makeTimeString(duration);
-  renderString(timeString, target);
+  renderTime(timeString);
 
   if (duration === 0) {
-    timerHasEnded();
+    clearInterval(timeInterval);
+
+    if (mode === 'session') {
+      // session has ended
+      const breakDuration = getDuration(breakMinutes, breakSeconds);
+      mode = toggleMode(mode);
+      startTimer(breakDuration);
+    } else if (mode === 'break') {
+      // break has ended
+      const sessionDuration = getDuration(sessionMinutes, sessionSeconds);
+      mode = toggleMode(mode);
+      startTimer(sessionDuration);
+    }
   }
 }
 
@@ -46,10 +63,12 @@ function getDuration(minutes, seconds) {
   }
 }
 
-function startTimer(duration, target) {
+function startTimer(duration) {
+  renderMode(mode);
+
   if (duration) {
     timeInterval = setInterval(function () {
-      updateTimer(duration--, target);
+      updateTimer(duration--);
     }, 1000);
   } else {
     console.debug('no value give');
@@ -57,6 +76,6 @@ function startTimer(duration, target) {
 }
 
 startButton.addEventListener('click',
-  () => startTimer(getDuration(sessionMinutes, sessionSeconds), timer),
+  () => startTimer(getDuration(sessionMinutes, sessionSeconds)),
   false);
 
