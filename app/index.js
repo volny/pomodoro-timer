@@ -1,4 +1,5 @@
 import './style.scss';
+import $ from 'jquery';
 
 let timeInterval;
 let mode = 'session';
@@ -64,18 +65,24 @@ function getDuration(mode) {
   }
 }
 
-function renderMode(mode) {
+function renderForMode(mode) {
   const session = document.querySelector('#session')
   if (mode === 'break') {
     session.textContent = 'Break Time :)';
+
+    const target = $('#sessionContainer');
+    target.append('<button class="pure-button break-button" id="reset">Reset</button>');
+    target.append('<button class="pure-button break-button" id="restart">Restart</button>');
+
   } else {
     session.textContent = '';
+    $('.break-button').hide();
   }
 }
 
 function startTimer(duration) {
   // put the headline in the DOM for Break Time
-  renderMode(mode);
+  renderForMode(mode);
 
   if (duration) {
     // the first time we don't want to wait
