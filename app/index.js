@@ -65,8 +65,11 @@ function getDuration(mode) {
 }
 
 function renderMode(mode) {
+  const session = document.querySelector('#session')
   if (mode === 'break') {
-    document.querySelector('#session').textContent = 'Break Time :)';
+    session.textContent = 'Break Time :)';
+  } else {
+    session.textContent = '';
   }
 }
 
@@ -75,6 +78,9 @@ function startTimer(duration) {
   renderMode(mode);
 
   if (duration) {
+    // the first time we don't want to wait
+    updateTimer(duration--);
+
     timeInterval = setInterval(function () {
       updateTimer(duration--);
     }, 1000);
