@@ -1,11 +1,5 @@
 import './style.scss';
 
-const startButton = document.querySelector('#start');
-const sessionMinutes = document.querySelector('#sessionMinutes');
-const sessionSeconds = document.querySelector('#sessionSeconds');
-const breakMinutes = document.querySelector('#breakMinutes');
-const breakSeconds = document.querySelector('#breakSeconds');
-
 let timeInterval;
 let mode = 'session';
 
@@ -13,11 +7,6 @@ let mode = 'session';
 function renderTime(string) {
   const timer = document.querySelector('#timer');
   timer.textContent = string;
-}
-
-function renderMode(string) {
-  const session = document.querySelector('#session');
-  session.textContent = string;
 }
 
 function toggleMode(mode) {
@@ -39,19 +28,31 @@ function updateTimer(duration) {
 
     if (mode === 'session') {
       // session has ended
-      const breakDuration = getDuration(breakMinutes, breakSeconds);
       mode = toggleMode(mode);
+      const breakDuration = getDuration(mode);
       startTimer(breakDuration);
+
     } else if (mode === 'break') {
       // break has ended
-      const sessionDuration = getDuration(sessionMinutes, sessionSeconds);
       mode = toggleMode(mode);
+      const sessionDuration = getDuration(mode);
       startTimer(sessionDuration);
     }
   }
 }
 
-function getDuration(minutes, seconds) {
+function getValues(mode) {
+  if (mode === 'session') {
+    return [document.querySelector('#sessionMinutes'), document.querySelector('#sessionSeconds')]
+  } else if (mode === 'break') {
+    return [document.querySelector('#breakMinutes'), document.querySelector('#breakSeconds')]
+  }
+}
+
+function getDuration(mode) {
+  const minutes = getValues(mode)[0];
+  const seconds = getValues(mode)[1];
+
   if (minutes.value && seconds.value) {
     return parseInt(minutes.value) * 60 + parseInt(seconds.value);
   } else if (minutes.value) {
@@ -63,7 +64,14 @@ function getDuration(minutes, seconds) {
   }
 }
 
+function renderMode(mode) {
+  if (mode === 'break') {
+    document.querySelector('#session').textContent = 'Break Time :)';
+  }
+}
+
 function startTimer(duration) {
+  // put the headline in the DOM for Break Time
   renderMode(mode);
 
   if (duration) {
@@ -75,7 +83,8 @@ function startTimer(duration) {
   }
 }
 
-startButton.addEventListener('click',
-  () => startTimer(getDuration(sessionMinutes, sessionSeconds)),
+document.querySelector('#start').addEventListener('click',
+  //() => startTimer(getDuration(sessionMinutes, sessionSeconds)),
+  () => startTimer(getDuration('session')),
   false);
 
