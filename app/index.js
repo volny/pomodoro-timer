@@ -3,6 +3,8 @@ import './style.scss';
 const timer = document.querySelector('#timer');
 const startButton = document.querySelector('#start');
 
+let timeInterval;
+
 function renderString(string, target) {
   target.textContent = string;
 }
@@ -13,21 +15,29 @@ function makeTimeString (time) {
   return minutes + " Minutes " + seconds + " Seconds";
 }
 
+function timerHasEnded() {
+  clearInterval(timeInterval);
+  renderString('Finished', timer)
+}
+
+function updateTimer(duration, target) {
+  var timeString = makeTimeString(duration);
+  renderString(timeString, target);
+
+  if (duration === 0) {
+    timerHasEnded();
+  }
+}
+
 function startTimer(duration, target) {
-  var time = duration;
-
-  setInterval(function () {
-    var timeString = makeTimeString(time);
-    renderString(timeString, target);
-
-    if (--time < 0) {
-      time = duration;
-    }
+  timeInterval = setInterval(function () {
+    updateTimer(duration--, target);
   }, 1000);
+
 }
 
 function timerCallback() {
-  startTimer(5, timer);
+  startTimer(2, timer);
 }
 
 startButton.addEventListener('click', timerCallback, false)
