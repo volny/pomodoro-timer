@@ -20,25 +20,18 @@ function makeTimeString (time) {
   return minutes + " Minutes " + seconds + " Seconds";
 }
 
+function startNextSession() {
+  clearInterval(timeInterval);
+  mode = toggleMode(mode);
+  startTimer(getDuration(mode));
+}
+
 function updateTimer(duration) {
   var timeString = makeTimeString(duration);
   renderTime(timeString);
 
   if (duration === 0) {
-    clearInterval(timeInterval);
-
-    if (mode === 'session') {
-      // session has ended
-      mode = toggleMode(mode);
-      const breakDuration = getDuration(mode);
-      startTimer(breakDuration);
-
-    } else if (mode === 'break') {
-      // break has ended
-      mode = toggleMode(mode);
-      const sessionDuration = getDuration(mode);
-      startTimer(sessionDuration);
-    }
+    startNextSession();
   }
 }
 
@@ -69,11 +62,7 @@ function renderForMode(mode) {
   const session = document.querySelector('#session')
   if (mode === 'break') {
     session.textContent = 'Break Time :)';
-
-    const target = $('#sessionContainer');
-    target.append('<button class="pure-button break-button" id="reset">Reset</button>');
-    target.append('<button class="pure-button break-button" id="restart">Restart</button>');
-
+    $('.break-button').show();
   } else {
     session.textContent = '';
     $('.break-button').hide();
@@ -95,6 +84,8 @@ function startTimer(duration) {
     console.debug('no value give');
   }
 }
+
+document.querySelector('#restart').addEventListener('click', startNextSession, false);
 
 document.querySelector('#start').addEventListener('click',
   //() => startTimer(getDuration(sessionMinutes, sessionSeconds)),
