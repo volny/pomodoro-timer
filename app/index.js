@@ -1,5 +1,6 @@
 import './style.scss';
 import $ from 'jquery';
+import './flipclock.min.js';
 
 let timeInterval;
 let mode = 'session';
