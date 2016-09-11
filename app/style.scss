@@ -4,16 +4,29 @@ $font-stack:    "Helvetica Neue", Helvetica, sans-serif;
 $primary-color: #333;
 
 body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
   font: 100% $font-stack;
   color: $primary-color;
 }
 
 #sessionContainer {
-  margin: 20px;
+  margin-top: 10%;
   display: none;
 }
 
 #menuContainer {
+  width: 100%;
+  margin-top: 10%;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .break-button {

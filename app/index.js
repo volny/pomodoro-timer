@@ -20,10 +20,13 @@ function makeTimeString (time) {
 
 function stopSession() {
   clearInterval(timeInterval);
+  $('#sessionContainer').hide();
+  $('#menuContainer').show();
+  mode = 'session';
 }
 
 function startNextSession() {
-  stopSession();
+  clearInterval(timeInterval);
   mode = toggleMode(mode);
   startTimer(getDuration(mode));
 }
@@ -72,14 +75,14 @@ function renderForMode(mode) {
 }
 
 function startTimer(duration) {
-  // hide the menu and show the timer
-  $('#sessionContainer').show();
-  $('#menuContainer').hide();
-
   // put the headline in the DOM for Break Time
   renderForMode(mode);
 
   if (duration) {
+    // hide the menu and show the timer
+    $('#sessionContainer').show();
+    $('#menuContainer').hide();
+
     // the first time we don't want to wait
     updateTimer(duration--);
 
