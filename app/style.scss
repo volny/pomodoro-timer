@@ -10,6 +10,10 @@ body {
 
 #sessionContainer {
   margin: 20px;
+  display: none;
+}
+
+#menuContainer {
 }
 
 .break-button {
@@ -26,4 +30,3 @@ body {
   background: rgb(202, 60, 60); /* this is a maroon */
   color: white;
 }
-

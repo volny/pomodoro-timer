@@ -72,6 +72,10 @@ function renderForMode(mode) {
 }
 
 function startTimer(duration) {
+  // hide the menu and show the timer
+  $('#sessionContainer').show();
+  $('#menuContainer').hide();
+
   // put the headline in the DOM for Break Time
   renderForMode(mode);
 
