@@ -5,10 +5,6 @@ import './flipclock.min.js';
 let timeInterval;
 let mode = 'session';
 
-function renderTime(string) {
-  $('#timer').text(string);
-}
-
 function toggleMode(mode) {
   return mode === 'session' ? 'break' : 'session';
 }
@@ -32,8 +28,11 @@ function startNextSession() {
   startTimer(getDuration(mode));
 }
 
+// THIS IS THE FUNC I CAN REPLACE BY FLIPCLOCK
+// NO NEED TO UPDATE EVERY SECOND ANYMORE
 function updateTimer(duration) {
-  renderTime(makeTimeString(duration));
+  //const string = makeTimeString(duration);
+  //$('#timer').text(string);
 
   if (duration === 0) {
     startNextSession();
@@ -64,7 +63,14 @@ function getDuration(mode) {
   return duration;
 }
 
-function renderForMode(mode) {
+function renderForMode(mode, duration) {
+  // FLIPCLOCK INSTANCE
+  var clock = $('#clock').FlipClock({
+    //clockFace: 'HourlyCounter',
+    clockFace: 'MinuteCounter',
+    countdown: true,
+  });
+
   const session = $('#session');
   if (mode === 'break') {
     session.text('Break Time :)');
@@ -73,23 +79,29 @@ function renderForMode(mode) {
     session.text('');
     $('.break-button').hide();
   }
+
+  clock.reset();
+  clock.setTime(duration);
+  clock.start();
 }
 
 function startTimer(duration) {
   // put the headline in the DOM for Break Time
-  renderForMode(mode);
+  renderForMode(mode, duration);
 
   if (duration) {
-    // hide the menu and show the timer
     $('#sessionContainer').show();
     $('#menuContainer').hide();
 
     // the first time we don't want to wait
     updateTimer(duration--);
 
+    // DON'T NEED AN INTERVAL ANYMORE!
+    // FLIPCLOCK COUNTS DOWN DURATION AND FIRES AN EVENT WHEN DONE
     timeInterval = setInterval(function () {
       updateTimer(duration--);
     }, 1000);
+
   } else {
     console.debug('no value given');
   }
