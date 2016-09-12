@@ -67,7 +67,8 @@ function sessionStarted() {
 }
 
 function sessionEnded() {
-  startNextSession();
+  // TODO hack bc `stop` event is fired with 1 sec left on clock??
+  window.setTimeout(startNextSession, 1000);
 }
 
 function renderForMode(mode, duration) {
