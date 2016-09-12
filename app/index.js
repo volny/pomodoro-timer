@@ -24,8 +24,6 @@ const clock = $('#clock').FlipClock({
   }
 });
 
-let mode = 'session';
-
 function makeTimeString (time) {
   let minutes = parseInt(time / 60, 10);
   let seconds = parseInt(time % 60, 10);
@@ -35,22 +33,21 @@ function makeTimeString (time) {
 function reset() {
   $('#sessionContainer').hide();
   $('#menuContainer').show();
-  mode = 'session';
 }
 
 function start() {
 }
 
+let mode = 'sesssion';
+
 function stop() {
+  console.log(mode);
   // TODO hack bc `stop` event is fired with 1 sec left on clock??
-  window.setTimeout(() => startTimer(getDuration(mode)), 1000);
+  window.setTimeout(() => startTimer(mode), 1000);
 }
 
-function getDuration(mode) {
-  return mode === 'session' ? document.querySelector('#sessionInput').value : document.querySelector('#breakInput').value;
-}
-
-function startTimer(duration) {
+function startTimer() {
+  const duration = mode === 'session' ? document.querySelector('#sessionInput').value : document.querySelector('#breakInput').value;
   // if we got values change from menu to timer screen
   // TODO should everything in this func be only if (duration)?
   if (duration) {
@@ -78,8 +75,8 @@ function startTimer(duration) {
   mode = mode === 'session' ? 'break' : 'session';
 }
 
-$('#restart').click(() => startTimer(getDuration('session')));
+$('#restart').click(() => {mode = 'session'; startTimer()});
 $('#reset').click(reset);
 
-$('#start').click(() => startTimer(getDuration('session')));
+$('#start').click(() => {mode = 'session'; startTimer()});
 
