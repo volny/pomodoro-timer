@@ -30,14 +30,14 @@ function startNextSession() {
 
 // THIS IS THE FUNC I CAN REPLACE BY FLIPCLOCK
 // NO NEED TO UPDATE EVERY SECOND ANYMORE
-function updateTimer(duration) {
+//function updateTimer(duration) {
   //const string = makeTimeString(duration);
   //$('#timer').text(string);
 
-  if (duration === 0) {
-    startNextSession();
-  }
-}
+//  if (duration === 0) {
+//    startNextSession();
+//  }
+//}
 
 // TODO error when converting to jQuery selectors?
 function getValues(mode) {
@@ -63,8 +63,14 @@ function getDuration(mode) {
   return duration;
 }
 
-function renderForMode(mode, duration) {
+function sessionStarted() {
+}
 
+function sessionEnded() {
+  startNextSession();
+}
+
+function renderForMode(mode, duration) {
   // FLIPCLOCK INSTANCE
   // issue: putting duration here weirdly brakes `clock.reset()` - get use `setTime`
   // issue: putting duration here makes clock lag behind by one second
@@ -75,8 +81,10 @@ function renderForMode(mode, duration) {
     clockFace: 'MinuteCounter',
     countdown: true,
     callbacks: {
-      stop: () => console.debug(mode, 'has stopped'),
-      start: () => console.debug(mode, 'has started'),
+      //start: () => console.debug(mode, 'has started'),
+      start: sessionStarted,
+      //stop: () => console.debug(mode, 'has stopped'),
+      stop: sessionEnded,
       //interval: () => console.debug('clock interval'),
       //reset: () => console.debug('clock has reset')
     }
@@ -106,13 +114,13 @@ function startTimer(duration) {
     $('#menuContainer').hide();
 
     // the first time we don't want to wait
-    updateTimer(duration--);
+    //updateTimer(duration--);
 
-    // DON'T NEED AN INTERVAL ANYMORE!
-    // FLIPCLOCK COUNTS DOWN DURATION AND FIRES AN EVENT WHEN DONE
-    timeInterval = setInterval(function () {
-      updateTimer(duration--);
-    }, 1000);
+    //// DON'T NEED AN INTERVAL ANYMORE!
+    //// FLIPCLOCK COUNTS DOWN DURATION AND FIRES AN EVENT WHEN DONE
+    //timeInterval = setInterval(function () {
+    //  updateTimer(duration--);
+    //}, 1000);
 
   } else {
     console.debug('no value given');
