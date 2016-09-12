@@ -64,11 +64,22 @@ function getDuration(mode) {
 }
 
 function renderForMode(mode, duration) {
+
   // FLIPCLOCK INSTANCE
+  // issue: putting duration here weirdly brakes `clock.reset()` - get use `setTime`
+  // issue: putting duration here makes clock lag behind by one second
+  //var clock = $('#clock').FlipClock(duration, {
   var clock = $('#clock').FlipClock({
+    autoStart: false,
     //clockFace: 'HourlyCounter',
     clockFace: 'MinuteCounter',
     countdown: true,
+    callbacks: {
+      stop: () => console.debug(mode, 'has stopped'),
+      start: () => console.debug(mode, 'has started'),
+      //interval: () => console.debug('clock interval'),
+      //reset: () => console.debug('clock has reset')
+    }
   });
 
   const session = $('#session');
@@ -80,7 +91,8 @@ function renderForMode(mode, duration) {
     $('.break-button').hide();
   }
 
-  clock.reset();
+  //clock.setCountdown(true);
+  //clock.reset();
   clock.setTime(duration);
   clock.start();
 }
