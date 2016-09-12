@@ -2,7 +2,28 @@ import './style.scss';
 import $ from 'jquery';
 import './flipclock.min.js';
 
-let timeInterval;
+// FLIPCLOCK INSTANCE
+// issue: putting duration here weirdly brakes `clock.reset()` - get use `setTime`
+// issue: putting duration here makes clock lag behind by one second
+//var clock = $('#clock').FlipClock(duration, {
+var clock = $('#clock').FlipClock({
+  autoStart: false,
+  //clockFace: 'HourlyCounter',
+  clockFace: 'MinuteCounter',
+  countdown: true,
+  callbacks: {
+    start: sessionStarted,
+    stop: sessionEnded,
+    interval: function() {
+    // HOW TO USE FLIPCLOCK METHODS
+      var time = this.factory.getTime().time;
+      if(time) {
+        console.log('interval', time);
+      }
+    }
+  }
+});
+
 let mode = 'session';
 
 function toggleMode(mode) {
@@ -14,30 +35,6 @@ function makeTimeString (time) {
   let seconds = parseInt(time % 60, 10);
   return minutes + " Minutes " + seconds + " Seconds";
 }
-
-function stopSession() {
-  clearInterval(timeInterval);
-  $('#sessionContainer').hide();
-  $('#menuContainer').show();
-  mode = 'session';
-}
-
-function startNextSession() {
-  clearInterval(timeInterval);
-  mode = toggleMode(mode);
-  startTimer(getDuration(mode));
-}
-
-// THIS IS THE FUNC I CAN REPLACE BY FLIPCLOCK
-// NO NEED TO UPDATE EVERY SECOND ANYMORE
-//function updateTimer(duration) {
-  //const string = makeTimeString(duration);
-  //$('#timer').text(string);
-
-//  if (duration === 0) {
-//    startNextSession();
-//  }
-//}
 
 // TODO error when converting to jQuery selectors?
 function getValues(mode) {
@@ -63,6 +60,18 @@ function getDuration(mode) {
   return duration;
 }
 
+function startNextSession() {
+  mode = toggleMode(mode);
+  startTimer(getDuration(mode));
+}
+
+function stopSession() {
+  $('#sessionContainer').hide();
+  $('#menuContainer').show();
+  mode = 'session';
+}
+
+
 function sessionStarted() {
 }
 
@@ -71,26 +80,17 @@ function sessionEnded() {
   window.setTimeout(startNextSession, 1000);
 }
 
-function renderForMode(mode, duration) {
-  // FLIPCLOCK INSTANCE
-  // issue: putting duration here weirdly brakes `clock.reset()` - get use `setTime`
-  // issue: putting duration here makes clock lag behind by one second
-  //var clock = $('#clock').FlipClock(duration, {
-  var clock = $('#clock').FlipClock({
-    autoStart: false,
-    //clockFace: 'HourlyCounter',
-    clockFace: 'MinuteCounter',
-    countdown: true,
-    callbacks: {
-      //start: () => console.debug(mode, 'has started'),
-      start: sessionStarted,
-      //stop: () => console.debug(mode, 'has stopped'),
-      stop: sessionEnded,
-      //interval: () => console.debug('clock interval'),
-      //reset: () => console.debug('clock has reset')
-    }
-  });
+function startTimer(duration) {
+  // if we got values change from menu to timer screen
+  // TODO should everything in this func be only if (duration)?
+  if (duration) {
+    $('#sessionContainer').show();
+    $('#menuContainer').hide();
+  } else {
+    console.debug('no value given');
+  }
 
+  // put the session name subheadline in the DOM
   const session = $('#session');
   if (mode === 'break') {
     session.text('Break Time :)');
@@ -100,32 +100,9 @@ function renderForMode(mode, duration) {
     $('.break-button').hide();
   }
 
-  //clock.setCountdown(true);
-  //clock.reset();
+  // start the timer
   clock.setTime(duration);
   clock.start();
-}
-
-function startTimer(duration) {
-  // put the headline in the DOM for Break Time
-  renderForMode(mode, duration);
-
-  if (duration) {
-    $('#sessionContainer').show();
-    $('#menuContainer').hide();
-
-    // the first time we don't want to wait
-    //updateTimer(duration--);
-
-    //// DON'T NEED AN INTERVAL ANYMORE!
-    //// FLIPCLOCK COUNTS DOWN DURATION AND FIRES AN EVENT WHEN DONE
-    //timeInterval = setInterval(function () {
-    //  updateTimer(duration--);
-    //}, 1000);
-
-  } else {
-    console.debug('no value given');
-  }
 }
 
 $('#restart').click(startNextSession);
