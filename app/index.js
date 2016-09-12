@@ -32,30 +32,6 @@ function makeTimeString (time) {
   return minutes + " Minutes " + seconds + " Seconds";
 }
 
-// TODO error when converting to jQuery selectors?
-function getValues(mode) {
-  if (mode === 'session') {
-    return [document.querySelector('#sessionMinutes'), document.querySelector('#sessionSeconds')]
-    //return [$('#sessionMinutes'), $('#sessionSeconds')];
-  } else if (mode === 'break') {
-    return [document.querySelector('#breakMinutes'), document.querySelector('#breakSeconds')]
-    //return [$('#breakMinutes'), $('#breakSeconds')];
-  }
-}
-
-function getDuration(mode) {
-  const minutes = getValues(mode)[0];
-  const seconds = getValues(mode)[1];
-  let duration = 0;
-  if (minutes.value) {
-    duration += parseInt(minutes.value) *60;
-  }
-  if (seconds.value) {
-    duration += parseInt(seconds.value);
-  }
-  return duration;
-}
-
 function reset() {
   $('#sessionContainer').hide();
   $('#menuContainer').show();
@@ -68,6 +44,10 @@ function start() {
 function stop() {
   // TODO hack bc `stop` event is fired with 1 sec left on clock??
   window.setTimeout(() => startTimer(getDuration(mode)), 1000);
+}
+
+function getDuration(mode) {
+  return mode === 'session' ? document.querySelector('#sessionInput').value : document.querySelector('#breakInput').value;
 }
 
 function startTimer(duration) {
