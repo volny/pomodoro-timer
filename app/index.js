@@ -6,15 +6,15 @@ import './flipclock.min.js';
 // issue: putting duration here weirdly brakes `clock.reset()` - get use `setTime`
 // issue: putting duration here makes clock lag behind by one second
 //var clock = $('#clock').FlipClock(duration, {
-var clock = $('#clock').FlipClock({
+const clock = $('#clock').FlipClock({
   autoStart: false,
   //clockFace: 'HourlyCounter',
   clockFace: 'MinuteCounter',
   countdown: true,
   callbacks: {
-    start: sessionStarted,
-    stop: sessionEnded,
-    interval: function() {
+    start,
+    stop,
+    interval() {
     // HOW TO USE FLIPCLOCK METHODS
       var time = this.factory.getTime().time;
       if(time) {
@@ -25,10 +25,6 @@ var clock = $('#clock').FlipClock({
 });
 
 let mode = 'session';
-
-function toggleMode(mode) {
-  return mode === 'session' ? 'break' : 'session';
-}
 
 function makeTimeString (time) {
   let minutes = parseInt(time / 60, 10);
@@ -60,24 +56,18 @@ function getDuration(mode) {
   return duration;
 }
 
-function startNextSession() {
-  mode = toggleMode(mode);
-  startTimer(getDuration(mode));
-}
-
-function stopSession() {
+function reset() {
   $('#sessionContainer').hide();
   $('#menuContainer').show();
   mode = 'session';
 }
 
-
-function sessionStarted() {
+function start() {
 }
 
-function sessionEnded() {
+function stop() {
   // TODO hack bc `stop` event is fired with 1 sec left on clock??
-  window.setTimeout(startNextSession, 1000);
+  window.setTimeout(() => startTimer(getDuration(mode)), 1000);
 }
 
 function startTimer(duration) {
@@ -103,10 +93,13 @@ function startTimer(duration) {
   // start the timer
   clock.setTime(duration);
   clock.start();
+
+  // change mode
+  mode = mode === 'session' ? 'break' : 'session';
 }
 
-$('#restart').click(startNextSession);
-$('#reset').click(stopSession);
+$('#restart').click(() => startTimer(getDuration('session')));
+$('#reset').click(reset);
 
 $('#start').click(() => startTimer(getDuration('session')));
 
