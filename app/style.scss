@@ -20,8 +20,24 @@ body {
 }
 
 #menuContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   width: 100%;
   margin-top: 10%;
+}
+
+.pure-control-group {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.validation-message {
+  display: none;
+  color: rgb(202, 60, 60); /* this is a maroon */
+  font-weight: 700;
 }
 
 .clock {
@@ -33,6 +49,16 @@ fieldset {
   align-items: center;
 }
 
+input[type=number] {
+  width: 6em;
+}
+
+.button-secondary {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
 .break-button {
   margin: 3px;
   display: none;
@@ -40,10 +66,18 @@ fieldset {
 
 .button-success {
   background: rgb(28, 184, 65); /* this is a green */
-  color: white;
 }
 
 .button-error {
   background: rgb(202, 60, 60); /* this is a maroon */
-  color: white;
 }
+
+.button-success {
+    background: rgb(28, 184, 65); /* this is a green */
+}
+
+.start-button {
+  margin-top: 10px;
+  width: 80%;
+}
+

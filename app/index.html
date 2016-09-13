@@ -6,17 +6,19 @@
 </head>
 <body>
   <div id="menuContainer">
-    <form class="pure-form pure-form-aligned">
+    <h2>Pomodoro Timer</h2>
+    <form class="pure-form pure-form-aligned" id="startForm">
       <fieldset>
         <div class="pure-control-group">
           <label for="sessionInput">Session Time</label>
-          <input type="number" min="0" step="1" placeholder="Minutes" id="sessionInput">
+          <input type="number" min="0" step="1" placeholder="Minutes" id="sessionInput" required>
         </div>
         <div class="pure-control-group">
           <label for="breakInput">Break Time</label>
-          <input type="number" min="0" step="1" placeholder="Minutes" id="breakInput">
+          <input type="number" min="0" step="1" placeholder="Minutes" id="breakInput" required>
         </div>
-        <button type="button" class="pure-button pure-button-primary" id="start">Start</button>
+        <p id="validationMessage" class="validation-message">Please enter session and break duration in minutes.</p>
+        <button type="button" class="pure-button button-secondary button-success start-button" id="start">Start Sesssion</button>
       </fieldset>
     </form>
   </div>
@@ -24,12 +26,10 @@
   <div id="sessionContainer">
     <h2 id="session"></h2>
 
-    <!-- <p id="timer"></p> -->
-
     <div id="clock" class="clock"></div>
 
-    <button class="pure-button button-success break-button" id="restart">Start Next Session Now</button>
-    <button class="pure-button button-error break-button" id="reset">Back to Menu</button>
+    <button class="pure-button button-secondary button-success break-button" id="restart">Start Next Session Now</button>
+    <button class="pure-button button-secondary button-error break-button" id="reset">Back to Menu</button>
   </div>
 
 

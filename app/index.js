@@ -35,7 +35,9 @@ function startTimer() {
   const sessionLength = parseInt(document.querySelector('#sessionInput').value);
   const breakLength = parseInt(document.querySelector('#breakInput').value);
 
-  if (sessionLength && breakLength) {
+  //if (sessionLength && breakLength) {
+  if ($('#startForm')[0].checkValidity()) {
+    $('#validationMessage').hide();
 
     $('#sessionContainer').show();
     $('#menuContainer').hide();
@@ -58,7 +60,7 @@ function startTimer() {
       mode = 'break';
     }
   } else {
-    console.debug('no value given');
+    $('#validationMessage').show();
   }
 }
 
