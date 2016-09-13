@@ -6,17 +6,27 @@
 </head>
 <body>
   <div id="menuContainer">
-    <h2>Pomodoro Timer</h2>
+    <h1>Pomodoro Timer</h1>
     <form class="pure-form pure-form-aligned" id="startForm">
       <fieldset>
-        <div class="pure-control-group">
-          <label for="sessionInput">Session Time</label>
-          <input type="number" min="0" step="1" placeholder="Minutes" id="sessionInput" pattern="[0-9]{3}" oninvalid="setCustomValidity(' ')" required>
-        </div>
-        <div class="pure-control-group">
-          <label for="breakInput">Break Time</label>
-          <input type="number" min="0" step="1" placeholder="Minutes" id="breakInput" pattern="[0-9]{3}" oninvalid="setCustomValidity(' ')" required>
-        </div>
+
+          <!--<label for="sessionInput">Session Time</label>-->
+          <h2>Session</h2>
+          <div id="sessionSlider" class="slider"></div>
+          <div>
+            <br>
+            <input type="number" min="0" step="1" placeholder="Minutes" id="sessionInput" pattern="[0-9]{3}" oninvalid="setCustomValidity(' ')" required>
+            <span>Minutes</span>
+          </div>
+
+          <h2>Break</h2>
+          <div id="breakSlider" class="slider"></div>
+          <div>
+            <br>
+            <input type="number" min="0" step="1" placeholder="Minutes" id="breakInput" pattern="[0-9]{3}" oninvalid="setCustomValidity(' ')" required>
+            <span>Minutes</span>
+          </div>
+
         <p id="validationMessage" class="validation-message">Please enter session and break duration in minutes.</p>
         <button type="button" class="pure-button button-secondary button-success start-button" id="start">Start Sesssion</button>
         <input type="submit" style="display: none;">
