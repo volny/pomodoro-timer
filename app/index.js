@@ -19,11 +19,11 @@ const clock = $('#clock').FlipClock({
   }
 });
 
+// same problem: can't use jQuery selectors bc weird error
 const sessionSlider = document.querySelector('#sessionSlider');
 const sessionInput = document.querySelector('#sessionInput');
-
 noUiSlider.create(sessionSlider, {
-  start: 20,
+  start: 3,
   step: 1,
   connect: 'lower',
   animate: true,
@@ -33,8 +33,6 @@ noUiSlider.create(sessionSlider, {
     'max': 120
   }
 });
-
-sessionSlider.noUiSlider.set([null, 100]);
 
 sessionSlider.noUiSlider.on('update', function(values, handle) {
   sessionInput.value = parseInt(values[handle]);
@@ -47,9 +45,8 @@ sessionSlider.noUiSlider.on('update', function(values, handle) {
 
 const breakSlider = document.querySelector('#breakSlider');
 const breakInput = document.querySelector('#breakInput');
-
 noUiSlider.create(breakSlider, {
-  start: 20,
+  start: 5,
   step: 1,
   connect: 'lower',
   animate: true,
@@ -60,18 +57,17 @@ noUiSlider.create(breakSlider, {
   }
 });
 
-breakSlider.noUiSlider.set([null, 100]);
-
 breakSlider.noUiSlider.on('update', function(values, handle) {
   breakInput.value = parseInt(values[handle]);
 });
 
-
 let mode = 'sesssion';
 
 function reset() {
-  $('#sessionContainer').hide();
-  $('#menuContainer').show();
+  //$('#sessionContainer').hide();
+  $('#sessionContainer').css('display', 'none');
+  //$('#menuContainer').show();
+  $('#menuContainer').css('display', 'flex');
 }
 
 function start() {
@@ -87,22 +83,27 @@ function startTimer() {
   const breakLength = parseInt(document.querySelector('#breakInput').value);
 
   if ($('#startForm')[0].checkValidity()) {
-    $('#validationMessage').hide();
+    //$('#validationMessage').hide();
+    $('#validationMessage').css('display', 'flex');
 
-    $('#sessionContainer').show();
-    $('#menuContainer').hide();
+    //$('#sessionContainer').show();
+    $('#sessionContainer').css('display', 'flex');
+    //$('#menuContainer').hide();
+    $('#menuContainer').css('display', 'none');
 
     if (mode === 'break') {
       $('#session').text('Break Time :)');
-      $('.break-button').show();
+      //$('.break-button').show();
+      $('.break-button').css('display', 'flex');
 
       clock.setTime(breakLength);
       clock.start();
 
       mode = 'session';
     } else {
-      $('#session').empty();
-      $('.break-button').hide();
+      $('#session').text('Session')
+      //$('.break-button').hide();
+      $('.break-button').css('display', 'none');
 
       clock.setTime(sessionLength);
       clock.start();
