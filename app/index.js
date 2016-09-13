@@ -35,7 +35,6 @@ function startTimer() {
   const sessionLength = parseInt(document.querySelector('#sessionInput').value);
   const breakLength = parseInt(document.querySelector('#breakInput').value);
 
-  //if (sessionLength && breakLength) {
   if ($('#startForm')[0].checkValidity()) {
     $('#validationMessage').hide();
 
@@ -60,6 +59,8 @@ function startTimer() {
       mode = 'break';
     }
   } else {
+    // fake submit the form to get HTML5 form validation
+    $('#startForm').find(':submit').click();
     $('#validationMessage').show();
   }
 }

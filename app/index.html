@@ -11,14 +11,15 @@
       <fieldset>
         <div class="pure-control-group">
           <label for="sessionInput">Session Time</label>
-          <input type="number" min="0" step="1" placeholder="Minutes" id="sessionInput" required>
+          <input type="number" min="0" step="1" placeholder="Minutes" id="sessionInput" pattern="[0-9]{3}" oninvalid="setCustomValidity(' ')" required>
         </div>
         <div class="pure-control-group">
           <label for="breakInput">Break Time</label>
-          <input type="number" min="0" step="1" placeholder="Minutes" id="breakInput" required>
+          <input type="number" min="0" step="1" placeholder="Minutes" id="breakInput" pattern="[0-9]{3}" oninvalid="setCustomValidity(' ')" required>
         </div>
         <p id="validationMessage" class="validation-message">Please enter session and break duration in minutes.</p>
         <button type="button" class="pure-button button-secondary button-success start-button" id="start">Start Sesssion</button>
+        <input type="submit" style="display: none;">
       </fieldset>
     </form>
   </div>
