@@ -3,7 +3,6 @@ import $ from 'jquery';
 //import 'flipclockjs';
 import './flipclock.min.js';
 import noUiSlider from 'no-ui-slider';
-//import 'no-ui-slider/css/nouislider.css';
 
 const clock = $('#clock').FlipClock({
   autoStart: false,
@@ -64,9 +63,7 @@ breakSlider.noUiSlider.on('update', function(values, handle) {
 let mode = 'sesssion';
 
 function reset() {
-  //$('#sessionContainer').hide();
   $('#sessionContainer').css('display', 'none');
-  //$('#menuContainer').show();
   $('#menuContainer').css('display', 'flex');
 }
 
@@ -83,18 +80,14 @@ function startTimer() {
   const breakLength = parseInt(document.querySelector('#breakInput').value);
 
   if ($('#startForm')[0].checkValidity()) {
-    //$('#validationMessage').hide();
-    $('#validationMessage').css('display', 'flex');
-
-    //$('#sessionContainer').show();
     $('#sessionContainer').css('display', 'flex');
-    //$('#menuContainer').hide();
     $('#menuContainer').css('display', 'none');
 
     if (mode === 'break') {
       $('#session').text('Break Time :)');
-      //$('.break-button').show();
       $('.break-button').css('display', 'flex');
+      $('body').addClass('breakBody');
+      $('body').removeClass('sessionBody');
 
       clock.setTime(breakLength);
       clock.start();
@@ -102,8 +95,14 @@ function startTimer() {
       mode = 'session';
     } else {
       $('#session').text('Session')
-      //$('.break-button').hide();
       $('.break-button').css('display', 'none');
+      $('body').addClass('sessionBody');
+      $('body').removeClass('breakBody');
+
+      // TODO broken
+      if (sessionLength > 59) {
+        clock.clockFace = 'HourlyCounter';
+      }
 
       clock.setTime(sessionLength);
       clock.start();
