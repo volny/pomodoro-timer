@@ -4,6 +4,9 @@
 
 $font-stack:    "Helvetica Neue", Helvetica, sans-serif;
 $primary-color: #333;
+$session-color: #9b59b6;
+$break-color: #f1c40f;
+$overdue-color: #e74c3c;
 
 body {
   // transition for the color changes
@@ -22,11 +25,11 @@ body {
 }
 
 .sessionBody {
-  background-color: #e67e22;
+  background-color: lighten($session-color, 20% );
 }
 
 .breakBody {
-  background-color: #2ecc71;
+  background-color: lighten($break-color, 20% );
 }
 
 #sessionContainer {
