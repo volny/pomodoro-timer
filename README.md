@@ -14,7 +14,9 @@ Uses [noUiSlider](http://refreshless.com/nouislider) and [FlipclockJs](http://fl
 - needs a complete rewrite, basically
 - manually added some libs bc not sure how to properly import npm modules
 - flipclock stops one second short - `setInterval` hack now, needs proper solution
-- clock needs to reset when user leaves the timer. Weird issues with `clock.reset()`
+- clock needs to reset when user leaves the timer. Issues with `clock.reset()`
 - linking the input and slider not working as it should
 - form validation - after a wrong submit the form won't accept any values anymore
+- unexplainably break when using jQuery selectors in some places
+- for > 59 min 'HourlyCounter' should be used
 

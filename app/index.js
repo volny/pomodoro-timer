@@ -4,6 +4,9 @@ import $ from 'jquery';
 import './flipclock.min.js';
 import noUiSlider from 'no-ui-slider';
 
+// changes minutes to seconds for development
+let DEBUG = false;
+
 const clock = $('#clock').FlipClock({
   autoStart: false,
   //clockFace: 'HourlyCounter',
@@ -18,7 +21,7 @@ const clock = $('#clock').FlipClock({
   }
 });
 
-// same problem: can't use jQuery selectors bc weird error
+// can't use jQuery selectors bc weird error
 const sessionSlider = document.querySelector('#sessionSlider');
 const sessionInput = document.querySelector('#sessionInput');
 noUiSlider.create(sessionSlider, {
@@ -32,15 +35,14 @@ noUiSlider.create(sessionSlider, {
     'max': 120
   }
 });
-
 sessionSlider.noUiSlider.on('update', function(values, handle) {
   sessionInput.value = parseInt(values[handle]);
 });
 
-// broken
-//sessionInput.addEventListener('change', function(){
-//  sessionSlider.noUiSlider.set([null, this.value]);
-//});
+// TODO broken - link the input to the slider
+sessionInput.addEventListener('change', function(){
+  sessionSlider.noUiSlider.set([null, this.value]);
+});
 
 const breakSlider = document.querySelector('#breakSlider');
 const breakInput = document.querySelector('#breakInput');
@@ -55,7 +57,6 @@ noUiSlider.create(breakSlider, {
     'max': 120
   }
 });
-
 breakSlider.noUiSlider.on('update', function(values, handle) {
   breakInput.value = parseInt(values[handle]);
 });
@@ -76,8 +77,14 @@ function stop() {
 }
 
 function startTimer() {
-  const sessionLength = parseInt(document.querySelector('#sessionInput').value);
-  const breakLength = parseInt(document.querySelector('#breakInput').value);
+  let sessionLength, breakLength;
+  if (DEBUG) {
+    sessionLength = parseInt(document.querySelector('#sessionInput').value);
+    breakLength = parseInt(document.querySelector('#breakInput').value);
+  } else {
+    sessionLength = parseInt(document.querySelector('#sessionInput').value) * 60;
+    breakLength = parseInt(document.querySelector('#breakInput').value) * 60;
+  }
 
   if ($('#startForm')[0].checkValidity()) {
     $('#sessionContainer').css('display', 'flex');
