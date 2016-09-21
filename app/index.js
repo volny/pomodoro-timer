@@ -1,15 +1,13 @@
 import './style.scss';
 import $ from 'jquery';
-//import 'flipclockjs';
 import './flipclock.min.js';
 import noUiSlider from 'no-ui-slider';
 
 // changes minutes to seconds for development
-let DEBUG = true;
+let DEBUG = false;
 
 const clock = $('#clock').FlipClock({
   autoStart: false,
-  //clockFace: 'HourlyCounter',
   clockFace: 'MinuteCounter',
   countdown: true,
   callbacks: {
@@ -25,7 +23,7 @@ const clock = $('#clock').FlipClock({
 const sessionSlider = document.querySelector('#sessionSlider');
 const sessionInput = document.querySelector('#sessionInput');
 noUiSlider.create(sessionSlider, {
-  start: 3,
+  start: 20,
   step: 1,
   connect: 'lower',
   animate: true,
