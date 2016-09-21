@@ -5,7 +5,7 @@ import './flipclock.min.js';
 import noUiSlider from 'no-ui-slider';
 
 // changes minutes to seconds for development
-let DEBUG = false;
+let DEBUG = true;
 
 const clock = $('#clock').FlipClock({
   autoStart: false,
