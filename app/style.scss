@@ -1,4 +1,3 @@
-@import 'pure.min.css';
 @import 'flipclock.css';
 @import 'nouislider.css';
 
@@ -57,7 +56,7 @@ body {
 
 .validation-message {
   display: none;
-  color: rgb(202, 60, 60); /* this is a maroon */
+  color: rgb(202, 60, 60);
   font-weight: 700;
 }
 
@@ -66,32 +65,57 @@ body {
 
 .pure-form {
   width: 100%;
-}
-
-fieldset {
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+.inputContainer {
+  padding-top: 20px;
+  min-width: 126px;
+  flex-wrap: nowrap;
 }
 
 input[type=number] {
-  width: 4em;
+  display: inline;
+  width: 3em;
+  height: 30px;
+  border-style: solid;
+  border-color: #ccc;
+  border-radius: 3px;
+  border-width: 2px;
+  text-align: center;
+  font-size: 14px;
 }
 
-h3 {
+input[type=number]:focus {
+  outline: 0;
+  border-color: #aaa;
 }
 
 .slider {
-  width: 500px;
-  //width: 90%;
+  width: 70%;
+  max-width: 600px;
 }
 
-.button-secondary {
+.slider .noUi-base {
+  background: #7f8c8d;
+}
+
+.button {
     color: white;
+    border: none;
+    height: 35px;
+    font-size: 16px;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.start-button {
+  margin-top: 30px;
+  width: 30%;
+  min-width: 135px;
+  max-width: 300px;
 }
 
 .break-button {
@@ -99,19 +123,10 @@ h3 {
 }
 
 .button-success {
-  background: rgb(28, 184, 65); /* this is a green */
+  background: rgb(28, 184, 65);
 }
 
 .button-error {
-  background: rgb(202, 60, 60); /* this is a maroon */
-}
-
-.button-success {
-    background: rgb(28, 184, 65); /* this is a green */
-}
-
-.start-button {
-  margin-top: 30px;
-  width: 80%;
+  background: rgb(202, 60, 60);
 }
 
