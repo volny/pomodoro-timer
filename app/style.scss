@@ -57,7 +57,7 @@ body {
 
 .validation-message {
   display: none;
-  color: rgb(202, 60, 60); /* this is a maroon */
+  color: rgb(202, 60, 60);
   font-weight: 700;
 }
 
@@ -65,27 +65,23 @@ body {
 }
 
 .pure-form {
-  width: 100%;
-}
-
-fieldset {
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+.inputContainer {
+  padding-top: 20px;
 }
 
 input[type=number] {
   width: 4em;
 }
 
-h3 {
-}
-
 .slider {
   width: 500px;
-  //width: 90%;
+  // TODO should be percent
+  //width: 100%;
 }
 
 .button-secondary {
@@ -99,15 +95,15 @@ h3 {
 }
 
 .button-success {
-  background: rgb(28, 184, 65); /* this is a green */
+  background: rgb(28, 184, 65);
 }
 
 .button-error {
-  background: rgb(202, 60, 60); /* this is a maroon */
+  background: rgb(202, 60, 60);
 }
 
 .button-success {
-    background: rgb(28, 184, 65); /* this is a green */
+    background: rgb(28, 184, 65);
 }
 
 .start-button {
