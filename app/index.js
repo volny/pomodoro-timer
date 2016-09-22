@@ -1,10 +1,11 @@
-import './style.scss';
 import $ from 'jquery';
-import './flipclock.min.js';
 import noUiSlider from 'no-ui-slider';
+import './flipclock.min.js';
+// import FlipClock from 'flipclock';
+import './style.scss';
 
 // changes minutes to seconds for development
-let DEBUG = false;
+let DEBUG = true;
 
 const clock = $('#clock').FlipClock({
   autoStart: false,
